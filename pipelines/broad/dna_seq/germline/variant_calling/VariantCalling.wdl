@@ -36,25 +36,17 @@ workflow VariantCalling {
     Boolean use_gatk3_haplotype_caller = false
     Boolean skip_reblocking = false
     Boolean use_dragen_hard_filtering = false
-    String cloud_provider
+    String cloud_provider = "gcp"
   }
 
   # docker images
-  String gatk_docker_gcp = "us.gcr.io/broad-gatk/gatk:4.6.0.0"
-  String gatk_docker_azure = "terrapublic.azurecr.io/gatk:4.6.0.0"
-  String gatk_docker = if cloud_provider == "gcp" then gatk_docker_gcp else gatk_docker_azure
+  String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
 
-  String gatk_1_3_docker_gcp = "us.gcr.io/broad-gotc-prod/gatk:1.3.0-4.2.6.1-1649964384"
-  String gatk_1_3_docker_azure = "us.gcr.io/broad-gotc-prod/gatk:1.3.0-4.2.6.1-1649964384"
-  String gatk_1_3_docker = if cloud_provider == "gcp" then gatk_1_3_docker_gcp else gatk_1_3_docker_azure
+  String gatk_1_3_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:1.3.0-4.2.6.1-1649964384"
 
-  String picard_python_docker_gcp = "us.gcr.io/broad-gotc-prod/picard-python:1.0.0-2.26.10-1663951039"
-  String picard_python_docker_azure = "dsppipelinedev.azurecr.io/picard-python:1.0.0-2.26.10-1663951039"
-  String picard_python_docker = if cloud_provider == "gcp" then picard_python_docker_gcp else picard_python_docker_azure
+  String picard_python_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-python:1.0.0-2.26.10-1663951039"
 
-  String picard_cloud_docker_gcp = "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
-  String picard_cloud_docker_azure = "dsppipelinedev.azurecr.io/picard-cloud:2.26.10"
-  String picard_cloud_docker = if cloud_provider == "gcp" then picard_cloud_docker_gcp else picard_cloud_docker_azure
+  String picard_cloud_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
 
 
   # make sure either gcp or azr is supplied as cloud_provider input
@@ -272,7 +264,7 @@ task MergeBamouts {
   }
 
   runtime {
-    docker: "biocontainers/samtools:1.3.1"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/samtools:1.3.1"
     memory: "4 GiB"
     disks: "local-disk ~{disk_size} HDD"
     preemptible: 3

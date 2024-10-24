@@ -25,7 +25,7 @@ task SortSam {
     Int additional_disk = 20
     Int memory_multiplier = 1
     #Setting default docker value for workflows that haven't yet been azurized. 
-    String docker = "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    String docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
   }
   # SortSam spills to disk a lot more because we are only store 300000 records in RAM now because its faster for our data so it needs
   # more disk space.  Also it spills to disk in an uncompressed format so we need to account for that with a larger multiplier
@@ -109,7 +109,7 @@ task MarkDuplicates {
       ADD_PG_TAG_TO_READS=false
   }
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     preemptible: preemptible_tries
     memory: "~{memory_size} GiB"
     disks: "local-disk " + disk_size + " HDD"
@@ -136,7 +136,7 @@ task BaseRecalibrator {
     File ref_fasta_index
     Int bqsr_scatter
     Int preemptible_tries
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.3.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.3.0.0"
   }
 
   Float ref_size = size(ref_fasta, "GiB") + size(ref_fasta_index, "GiB") + size(ref_dict, "GiB")
@@ -188,7 +188,7 @@ task ApplyBQSR {
     Int compression_level
     Int bqsr_scatter
     Int preemptible_tries
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.3.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.3.0.0"
     Int memory_multiplier = 1
     Int additional_disk = 20
     Boolean bin_base_qualities = true
@@ -247,7 +247,7 @@ task GatherBqsrReports {
     Array[File] input_bqsr_reports
     String output_report_filename
     Int preemptible_tries
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.3.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.3.0.0"
   }
 
   command {
@@ -295,7 +295,7 @@ task GatherSortedBamFiles {
       CREATE_MD5_FILE=true
     }
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     preemptible: preemptible_tries
     memory: "${machine_mem_mb} MiB"
     disks: "local-disk " + disk_size + " HDD"
@@ -330,7 +330,7 @@ task GatherUnsortedBamFiles {
       CREATE_MD5_FILE=false
     }
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     preemptible: preemptible_tries
     memory: "3 GiB"
     disks: "local-disk " + disk_size + " HDD"
@@ -383,7 +383,7 @@ task GenerateSubsettedContaminationResources {
     preemptible: preemptible_tries
     memory: "3.5 GiB"
     disks: "local-disk 10 HDD"
-    docker: "us.gcr.io/broad-gotc-prod/bedtools:2.27.1"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/bedtools:2.27.1"
   }
   output {
     File subsetted_contamination_ud = output_ud
@@ -419,7 +419,7 @@ task CheckContamination {
     Float contamination_underestimation_factor
     Boolean disable_sanity_check = false
 
-     String docker = "us.gcr.io/broad-gotc-prod/verify-bam-id:1.0.1-c1cba76e979904eb69c31520a0d7f5be63c72253-1639071840"
+     String docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/verify-bam-id:1.0.1-c1cba76e979904eb69c31520a0d7f5be63c72253-1639071840"
   }
 
   Int disk_size = ceil(size(input_bam, "GiB") + size(ref_fasta, "GiB")) + 30

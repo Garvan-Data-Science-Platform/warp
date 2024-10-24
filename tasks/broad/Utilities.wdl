@@ -62,7 +62,7 @@ task CreateSequenceGroupingTSV {
   >>>
   runtime {
     preemptible: preemptible_tries
-    docker: "us.gcr.io/broad-dsp-gcr-public/base/python:3.9-debian"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/python:3.9-debian"
     memory: "2 GiB"
   }
   output {
@@ -80,7 +80,7 @@ task ScatterIntervalList {
     Int scatter_count
     Int break_bands_at_multiples_of
     #Setting default docker value for workflows that haven't yet been azurized. 
-    String docker = "us.gcr.io/broad-gotc-prod/picard-python:1.0.0-2.26.10-1663951039"
+    String docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-python:1.0.0-2.26.10-1663951039"
   }
 
   command <<<
@@ -146,7 +146,7 @@ task ConvertToCram {
     samtools index ~{output_basename}.cram
   >>>
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/samtools:1.0.0-1.11-1624651616"
     preemptible: preemptible_tries
     memory: "3 GiB"
     cpu: "1"
@@ -177,7 +177,7 @@ task ConvertToBam {
     samtools index ~{output_basename}.bam
   >>>
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/samtools:1.0.0-1.11-1624651616"
     preemptible: 3
     memory: "3 GiB"
     cpu: "1"
@@ -203,7 +203,7 @@ task SumFloats {
     Float total_size = read_float(stdout())
   }
   runtime {
-    docker: "us.gcr.io/broad-dsp-gcr-public/base/python:3.9-debian"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/python:3.9-debian"
     preemptible: preemptible_tries
   }
 }
@@ -219,7 +219,7 @@ task ErrorWithMessage {
   >>>
 
   runtime {
-    docker: "ubuntu:20.04"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/ubuntu:20.04"
   }
 }
 
@@ -231,7 +231,7 @@ task GetValidationInputs {
     Array[String]? input_files
     String? input_file
 
-    String docker = "us.gcr.io/broad-dsp-gcr-public/base/python:3.9-debian"
+    String docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/python:3.9-debian"
     Int cpu = 1
     Int memory_mb = 2000
     Int disk_size_gb = 20

@@ -28,7 +28,7 @@ task HaplotypeCaller_GATK35_GVCF {
     Int preemptible_tries
     Int hc_scatter
     #Setting default docker value for workflows that haven't yet been azurized.
-    String docker = "us.gcr.io/broad-gotc-prod/gatk:1.3.0-4.2.6.1-1649964384"
+    String docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:1.3.0-4.2.6.1-1649964384"
   }
 
   parameter_meta {
@@ -99,7 +99,7 @@ task HaplotypeCaller_GATK4_VCF {
     Boolean use_spanning_event_genotyping = true
     File? dragstr_model
     #Setting default docker value for workflows that haven't yet been azurized.
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.6.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
     Int memory_multiplier = 1
   }
   
@@ -174,7 +174,7 @@ task MergeVCFs {
     String output_vcf_name
     Int preemptible_tries = 3
     #Setting default docker value for workflows that haven't yet been azurized.
-    String docker = "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    String docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
   }
 
   Int disk_size = ceil(size(input_vcfs, "GiB") * 2.5) + 10
@@ -261,7 +261,7 @@ task HardFilterVcf {
     String vcf_basename
     File interval_list
     Int preemptible_tries
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.6.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
   }
 
   Int disk_size = ceil(2 * size(input_vcf, "GiB")) + 20
@@ -337,7 +337,7 @@ task CNNScoreVariants {
     File ref_fasta_index
     File ref_dict
     Int preemptible_tries
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.6.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
   }
 
   Int disk_size = ceil(size(bamout, "GiB") + size(ref_fasta, "GiB") + (size(input_vcf, "GiB") * 2))
@@ -394,7 +394,7 @@ task FilterVariantTranches {
     File dbsnp_resource_vcf_index
     String info_key
     Int preemptible_tries
-    String gatk_docker = "us.gcr.io/broad-gatk/gatk:4.6.0.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
   }
 
   Int disk_size = ceil(size(hapmap_resource_vcf, "GiB") +
