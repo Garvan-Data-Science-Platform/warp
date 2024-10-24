@@ -1143,3 +1143,43 @@ task CalculateAverageAnnotations {
     maxRetries : max_retries
   }
 }
+
+task ReblockGVCFs {
+  input {
+    File input_gvcf
+    File input_tbi
+    File ref_dict
+    File ref_fasta
+    File ref_fastq_index
+    String output_prefix
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.1.8.0"
+  }
+
+  String output_basename = output_prefix + ".reblock"
+  Int disk_size = ceil(size(input_gvcf, "GiB") + size(ref_fasta, "GiB") + size(ref_dict, "GiB")) + 10
+
+  command<<<
+    set -e
+    set -o pipefail
+
+    gatk --java-options -Xms3g ReblockGVCF \
+      -GQB 20 \
+      -do-qual-approx \
+      -R ~{ref_fasta} \
+      -V ~{input_gvcf} \
+      -O ~{output_basename}.g.vcf.gz \
+      --create-output-variant-index true
+  >>>
+
+  runtime {
+    memory: "3.75 GiB"
+    preemptible: 1
+    disks: "local-disk " + disk_size + " HDD"
+    docker: gatk_docker
+  }
+
+  output {
+    File reblock_gvcf = "~{output_basename}.g.vcf.gz"
+    File reblock_tbi = "~{output_basename}.g.vcf.gz.tbi"
+  }
+}

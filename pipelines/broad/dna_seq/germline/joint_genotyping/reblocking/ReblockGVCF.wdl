@@ -26,9 +26,7 @@ workflow ReblockGVCF {
 
   String gvcf_basename = basename(gvcf, gvcf_file_extension)
   # docker images
-  String gatk_docker_gcp = "us.gcr.io/broad-gatk/gatk:4.6.0.0"
-  String gatk_docker_azure = "terrapublic.azurecr.io/gatk:4.6.0.0"
-  String gatk_docker = if cloud_provider == "gcp" then gatk_docker_gcp else gatk_docker_azure
+  String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
 
   # make sure either gcp or azr is supplied as cloud_provider input
   if ((cloud_provider != "gcp") && (cloud_provider != "azure")) {
