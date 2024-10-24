@@ -19,6 +19,7 @@ workflow WholeGenomeFromFastq {
     String RGPU
     String RGCN
     String zones
+    String cloud_provider
 
     String sample_name
     String base_file_name
@@ -28,7 +29,6 @@ workflow WholeGenomeFromFastq {
     DNASeqSingleSampleReferences references
     VariantCallingScatterSettings scatter_settings
     PapiSettings papi_settings
-    QCSettings qc_settings
 
     File wgs_coverage_interval_list
   }
@@ -61,9 +61,8 @@ workflow WholeGenomeFromFastq {
       references = references,
       scatter_settings = scatter_settings,
       papi_settings = papi_settings,
-      qc_settings = qc_settings,
       wgs_coverage_interval_list = wgs_coverage_interval_list,
-      zones = zones
+      cloud_provider = cloud_provider
   }
 
   output {

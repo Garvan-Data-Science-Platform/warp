@@ -21,7 +21,7 @@ workflow AS_VQSR {
     Float snp_filter_level
     Float indel_filter_level
 
-    Int small_disk
+    Int small_disk_gb
     Int medium_disk
 
     File hapmap_resource_vcf
@@ -52,7 +52,7 @@ workflow AS_VQSR {
       ref_fasta = ref_fasta,
       ref_fasta_index = ref_fasta_index,
       ref_dict = ref_dict,
-      disk_size = small_disk,
+      disk_size_gb = small_disk_gb,
       sample_names_unique_done = true
   }
 
@@ -77,7 +77,7 @@ workflow AS_VQSR {
       dbsnp_resource_vcf = dbsnp_resource_vcf,
       dbsnp_resource_vcf_index = dbsnp_resource_vcf_index,
       use_allele_specific_annotations = true,
-      disk_size = small_disk
+      disk_size_gb = small_disk_gb
   }
 
 
@@ -99,7 +99,7 @@ workflow AS_VQSR {
       dbsnp_resource_vcf_index = dbsnp_resource_vcf_index,
       use_allele_specific_annotations = true,
       max_gaussians = snp_max_gaussians,
-      disk_size = small_disk
+      disk_size_gb = small_disk_gb
     }
 
 
@@ -117,7 +117,7 @@ workflow AS_VQSR {
       indel_filter_level = indel_filter_level,
       snp_filter_level = snp_filter_level,
       use_allele_specific_annotations = true,
-      disk_size = medium_disk
+      disk_size_gb = medium_disk
   }
 
   call Tasks.AnnotateSB as AnnotateSB {

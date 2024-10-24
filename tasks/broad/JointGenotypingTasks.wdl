@@ -1144,31 +1144,21 @@ task CalculateAverageAnnotations {
   }
 }
 
-task ReblockGVCFs {
+task CompressAndTabix {
   input {
-    File input_gvcf
-    File input_tbi
-    File ref_dict
-    File ref_fasta
-    File ref_fastq_index
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/nagim-images/gatk:4.1.8.0"
+    File input_vcf
     String output_prefix
-    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.1.8.0"
   }
 
-  String output_basename = output_prefix + ".reblock"
-  Int disk_size = ceil(size(input_gvcf, "GiB") + size(ref_fasta, "GiB") + size(ref_dict, "GiB")) + 10
+  Int disk_size = ceil(size(input_vcf, "GiB") * 3)
 
   command<<<
     set -e
     set -o pipefail
 
-    gatk --java-options -Xms3g ReblockGVCF \
-      -GQB 20 \
-      -do-qual-approx \
-      -R ~{ref_fasta} \
-      -V ~{input_gvcf} \
-      -O ~{output_basename}.g.vcf.gz \
-      --create-output-variant-index true
+    bgzip -c ~{input_vcf} > ~{output_prefix}.gz
+    tabix -p vcf ~{output_prefix}.gz
   >>>
 
   runtime {
@@ -1179,7 +1169,36 @@ task ReblockGVCFs {
   }
 
   output {
-    File reblock_gvcf = "~{output_basename}.g.vcf.gz"
-    File reblock_tbi = "~{output_basename}.g.vcf.gz.tbi"
+    File vcfgz = "~{output_prefix}.gz"
+    File tbi = "~{output_prefix}.gz.tbi"
+  }
+}
+
+task AnnotateSB {
+  input {
+    File input_vcf
+    File input_vcf_index
+    String annotated_vcf_filename
+  }
+
+  Int disk_size =  ceil(size(input_vcf, "GiB") * 3)
+
+  command<<<
+    set -e
+    set -o pipefail
+
+    bcftools annotate -x INFO/SB ~{input_vcf} -Oz -o ~{annotated_vcf_filename} && tabix -p vcf ~{annotated_vcf_filename}
+  >>>
+
+  runtime {
+    memory: "3.75 GiB"
+    preemptible: 1
+    disks: "local-disk " + disk_size + " HDD"
+    docker: "vandhanak/bcftools:1.3.1"
+  }
+
+  output {
+    File annotated_vcf = "~{annotated_vcf_filename}"
+    File annotated_vcf_index = "~{annotated_vcf_filename}.tbi"
   }
 }

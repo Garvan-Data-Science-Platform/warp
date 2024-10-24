@@ -143,10 +143,6 @@ workflows:
     subclass: WDL
     primaryDescriptorPath: /tasks/broad/CramToSubsetBam.wdl
 
-  - name: ReblockGVCFs
-    subclass: WDL
-    primaryDescriptorPath: /tasks/broad/ReblockGVCFs.wdl
-
   - name: WholeGenomeReprocessing
     subclass: WDL
     primaryDescriptorPath: /pipelines/broad/reprocessing/wgs/WholeGenomeReprocessing.wdl
