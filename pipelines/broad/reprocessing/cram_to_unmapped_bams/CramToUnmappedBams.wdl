@@ -123,7 +123,7 @@ task RevertSam {
   >>>
 
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     preemptible: 3
@@ -159,7 +159,7 @@ task CramToBam {
   >>>
 
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/samtools:1.0.0-1.11-1624651616"
     cpu: 3
     memory: "~{memory_in_MiB} MiB"
     disks: "local-disk " + disk_size + " HDD"
@@ -195,7 +195,7 @@ task GenerateOutputMap {
   >>>
 
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/samtools:1.0.0-1.11-1624651616"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     preemptible: 3
@@ -222,7 +222,7 @@ task SplitUpOutputMapFile {
   >>>
 
   runtime {
-    docker: "gcr.io/gcp-runtimes/ubuntu_16_0_4@sha256:025124e2f1cf4d29149958f17270596bffe13fc6acca6252977c572dd5ba01bf"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/ubuntu_16_0_4@sha256:025124e2f1cf4d29149958f17270596bffe13fc6acca6252977c572dd5ba01bf"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
   }
@@ -253,7 +253,7 @@ task SplitOutUbamByReadGroup {
   }
 
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/samtools:1.0.0-1.11-1624651616"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/samtools:1.0.0-1.11-1624651616"
     cpu: 2
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
@@ -284,7 +284,7 @@ task ValidateSamFile {
   >>>
 
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     preemptible: 3
@@ -319,7 +319,7 @@ task SortSam {
   >>>
 
   runtime {
-    docker: "us.gcr.io/broad-gotc-prod/picard-cloud:2.26.10"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     preemptible: 3
