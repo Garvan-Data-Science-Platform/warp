@@ -93,7 +93,7 @@ task FastqToSam {
       --SORT_ORDER queryname
   >>>
   runtime {
-    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.23.8"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + 400 + " HDD"
     memory: "6.5 GB"
     preemptible: 3
@@ -132,7 +132,7 @@ task RevertSam {
   >>>
 
   runtime {
-    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.23.8"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     maxRetries: maxRetries
@@ -240,7 +240,7 @@ task SplitUpOutputMapFile {
   >>>
 
   runtime {
-    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/ubuntu_16_0_4:latest"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/ubuntu_16_0_4@sha256:025124e2f1cf4d29149958f17270596bffe13fc6acca6252977c572dd5ba01bf"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     zones: zones
@@ -305,7 +305,7 @@ task ValidateSamFile {
   >>>
 
   runtime {
-    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.23.8"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     preemptible: 3
@@ -343,7 +343,7 @@ task SortSam {
   >>>
 
   runtime {
-    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.23.8"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/picard-cloud:2.26.10"
     disks: "local-disk " + disk_size + " HDD"
     memory: "~{memory_in_MiB} MiB"
     preemptible: 3

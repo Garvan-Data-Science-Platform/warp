@@ -1146,7 +1146,7 @@ task CalculateAverageAnnotations {
 
 task CompressAndTabix {
   input {
-    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.1.8.0"
+    String gatk_docker = "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/gatk:4.6.0.0"
     File input_vcf
     String output_prefix
   }
