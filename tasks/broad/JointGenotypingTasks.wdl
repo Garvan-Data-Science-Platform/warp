@@ -1194,7 +1194,7 @@ task AnnotateSB {
     memory: "3.75 GiB"
     preemptible: 1
     disks: "local-disk " + disk_size + " HDD"
-    docker: "vandhanak/bcftools:1.3.1"
+    docker: "australia-southeast1-docker.pkg.dev/pb-dev-312200/warp/bcftools:1.3.1"
   }
 
   output {
